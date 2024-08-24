@@ -18,20 +18,97 @@ class MyAccountController extends Controller
         return view('my-account.index', $data);
     }
 
-    public function orders()
+    public function orders(Request $request)
     {
-        $data = [
-            'title' => 'Orders'
-        ];
-        return view('my-account.orders', $data);
+        $title = 'Orders';
+
+        $ordersQuery = Auth::user()->orders()->with([
+            'orderDetails' => function ($query) {
+                $query->with([
+                    'product' => function ($query) {
+                        $query->withTrashed()
+                            ->with('image_thumbnail');
+                    }
+                ]);
+            }
+        ]);
+
+        if ($request->has('status') && !empty($request->status)) {
+            $orders = $ordersQuery->where('status', $request->status);
+        }
+
+        $orders = $ordersQuery->latest()->paginate(10)->withQueryString();
+
+        if ($request->has('order_id') && !empty($request->order_id)) {
+            return redirect()->route('my-account.order.detail', $request->order_id);
+        }
+        return view('my-account.orders', compact('title', 'orders'));
     }
 
-    public function orders_detail()
+    public function order_detail(string $id)
     {
-        $data = [
-            'title' => 'Orders Detail'
-        ];
-        return view('my-account.orders-detail', $data);
+        $user = Auth::user();
+        $title = 'Order Details';
+        $order = $user->orders()->with([
+            'orderDetails' => function ($query) {
+                $query->with([
+                    'product' => function ($query) {
+                        $query->withTrashed()
+                            ->with('image_thumbnail');
+                    }
+                ]);
+            }
+        ])->with('shipment')->where('id', $id)->first();
+
+        if (!$order) {
+            abort(404);
+        }
+
+        $subtotal = $order->orderDetails->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
+
+
+        return view('my-account.order-detail', compact(['title', 'order', 'subtotal']));
+    }
+
+    public function order_cancel(Request $request, string $id)
+    {
+        $request->validate([
+            'note_cancelled' => ['required', 'string']
+        ]);
+        $user = Auth::user();
+        $order = $user->orders()->with([
+            'orderDetails' => function ($query) {
+                $query->with([
+                    "product" => function ($query) {
+                        $query->withTrashed();
+                    }
+                ]);
+            }
+        ])->where('id', $id)->first();
+        $order->cancelled_at = now();
+        $order->note_cancelled = $request->note_cancelled;
+        $order->status = 'CANCELLED';
+        $order->save();
+
+        foreach ($order->orderDetails as $item) {
+            $product = $item->product;
+            $product->stock += $item->quantity;
+            $product->save();
+        }
+
+        return redirect()->route('my-account.orders')->with('success', 'Order Cancelled');
+    }
+
+    public function order_confirm(string $id)
+    {
+        $user = Auth::user();
+        $order = $user->orders()->where('id', $id)->first();
+        $order->success_at = now();
+        $order->status = 'SUCCESS';
+        $order->save();
+        return redirect()->route('my-account.orders')->with('success', 'Order Arrived');
     }
 
     public function edit_account()
@@ -73,4 +150,6 @@ class MyAccountController extends Controller
 
         return redirect()->route('my-account.edit-account')->with('success', 'Account has been updated');
     }
+
+
 }

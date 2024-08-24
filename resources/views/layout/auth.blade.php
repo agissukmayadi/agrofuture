@@ -1,30 +1,46 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layout.master')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>{{ config('app.name') }}</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('/storage/img/logo.jpeg') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    @yield('style')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="font-poppins">
-    @yield('content')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @yield('script')
-</body>
-
-</html>
+@section('body')
+    <div class="w-full min-h-screen bg-gray-300 flex justify-center items-center px-3 md:px-10">
+        <div class="flex flex-col bg-white w-full shadow-md rounded-md md:flex-row md:w-3/4 overflow-hidden">
+            <div class="px-6 w-full md:w-1/2 py-10 md:py-14 md:px-8">
+                <h2 class="text-lg font-semibold">{{ Request::url() == route('login') ? 'Sign in' : 'Sign up' }}</h2>
+                @yield('form')
+                <div class="text-center mt-3">
+                    @if (Request::url() == route('login'))
+                        <span class="  text-xs">Dont have an account? <a href="{{ route('register') }}"
+                                class="text-secondary font-semibold"> Sign
+                                up</a></span>
+                    @else
+                        <span class="  text-xs">Already have an account? <a href="{{ route('login') }}"
+                                class="text-secondary font-semibold"> Sign
+                                in</a></span>
+                    @endif
+                </div>
+            </div>
+            <div
+                class="hidden md:flex md:w-1/2  bg-gradient-to-l  from-[#f76a35] to-secondary md:items-center justify-center">
+                <div class="text-white text-center">
+                    <h1 class=" font-bold text-2xl">Welcome to {{ Request::url() == route('login') ? 'login' : 'register' }}
+                    </h1>
+                    <p class="text-sm">
+                        {{ Request::url() == route('login') ? 'Dont have an account?' : 'Already have an account' }}</p>
+                    @if (Request::url() == route('login'))
+                        <a href="{{ route('register') }}"
+                            class="text-sm rounded-2xl border-2 px-6 py-1 inline-block mt-2 border-white">Sign up</a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="text-sm rounded-2xl border-2 px-6 py-1 inline-block mt-2 border-white">Sign in</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{{ route('home') }}" class="fixed top-2 right-2">
+        <svg class="w-[28px] h-[28px] text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+    </a>
+@endsection

@@ -10,11 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->renameColumn('note_canceled', 'note_cancelled');
         });
     }
 
@@ -23,6 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->renameColumn('note_cancelled', 'note_canceled');
+        });
     }
 };

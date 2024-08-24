@@ -2,24 +2,37 @@
 
 namespace App\Models;
 
+use App\Models\Order;
 use App\Models\Product;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class OrderDetail extends Model
 {
-    use HasFactory, SoftDeletes, HasUuids;
+    use HasUuids;
+
     protected $keyType = 'string';
+
     public $incrementing = false;
+
     protected $fillable = [
-        'name',
+        'order_id',
+        'product_id',
+        'price',
+        'quantity',
+        'weight',
     ];
 
-    public function products()
+    public function order()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Order::class);
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
 }

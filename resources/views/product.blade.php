@@ -48,10 +48,10 @@
                     @if ($products->count() > 0)
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                             @foreach ($products as $product)
-                                <a href="{{ route('product.detail', ['slug' => $product->slug]) }}">
+                                <a href="{{ route('product.detail', $product->id) }}">
                                     <div class=" max-w-full flex flex-col gap-2">
                                         <div class="relative overflow-hidden rounded-lg">
-                                            <img src="{{ asset('/storage/img/products/' . $product->images->first()->name) }}"
+                                            <img src="{{ asset('/storage/img/products/' . $product->image_thumbnail->name) }}"
                                                 alt="">
                                             @if ($product->stock <= 0)
                                                 <div
@@ -72,7 +72,7 @@
                             <p class=" text-left text-lg font-semibold text-primary">Sorry, we don't have any product
                             </p>
 
-                            @if (request()->has('product') || request()->has('category'))
+                            @if (request()->has('product') || request()->has('category_id'))
                                 <a href="{{ route('product') }}"
                                     class="rounded-full border border-primary px-6 py-2 flex items-center gap-2 w-fit">Clear
                                     <i class="fa-solid fa-xmark"></i></a>

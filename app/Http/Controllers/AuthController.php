@@ -15,18 +15,17 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login_act(Request $request)
+    public function login_action(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required'],
         ]);
-
         if (Auth::attempt($request->only(['email', 'password']))) {
             $request->session()->regenerate();
 
             if (Auth::user()->role == 'admin') {
-                return redirect()->intended('/dashboard');
+                return redirect()->intended('/admin');
             } elseif (Auth::user()->role == 'customer') {
                 return redirect()->intended('/');
             }
@@ -43,7 +42,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function register_act(Request $request)
+    public function register_action(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -57,8 +56,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'customer'
         ]);
+        Auth::login($user);
 
-        return redirect()->route('login');
+        return redirect()->intended('/');
     }
 
     public function logout(Request $request)

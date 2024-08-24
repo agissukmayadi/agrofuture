@@ -1,6 +1,7 @@
 @if ($paginator->hasPages())
-    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="flex items-center justify-between ">
-        <div class="flex justify-between flex-1 sm:hidden">
+    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}"
+        class="flex items-center justify-between w-full ">
+        <div class="flex justify-center flex-1 sm:hidden">
             @if ($paginator->onFirstPage())
                 <span
                     class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md ">
@@ -26,8 +27,8 @@
             @endif
         </div>
 
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center  sm:flex-col sm:gap-2">
-            <div class="order-2">
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between w-full sm:flex-row sm:gap-2">
+            <div class="order-1">
                 <p class="text-sm text-center text-gray-700 leading-5 ">
                     {!! __('Showing') !!}
                     @if ($paginator->firstItem())
@@ -43,7 +44,7 @@
                 </p>
             </div>
 
-            <div class="order-1">
+            <div class="order-2">
                 <span class="relative z-0 inline-flex rtl:flex-row-reverse shadow-sm rounded-md">
                     {{-- Previous Page Link --}}
                     @if ($paginator->onFirstPage())
@@ -86,11 +87,11 @@
                                 @if ($page == $paginator->currentPage())
                                     <span aria-current="page">
                                         <span
-                                            class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-secondary bg-white border border-gray-300 cursor-default leading-5 ">{{ $page }}</span>
+                                            class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-white {{ request()->is('admin*') ? 'bg-indigo-600' : 'bg-secondary ' }}  border border-gray-300 cursor-default leading-5 ">{{ $page }}</span>
                                     </span>
                                 @else
                                     <a href="{{ $url }}"
-                                        class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+                                        class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 {{ request()->is('admin*') ? 'hover:text-indigo-700' : 'hover:text-secondary' }} focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
                                         aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
                                         {{ $page }}
                                     </a>

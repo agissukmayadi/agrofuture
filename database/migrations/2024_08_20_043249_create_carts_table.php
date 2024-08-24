@@ -10,13 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('product_images', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('carts', function (Blueprint $table) {
+            $table->foreignUuid('user_id')->references('id')->on('users');
             $table->foreignUuid('product_id')->references('id')->on('products');
-
-            $table->string('name');
-            $table->boolean('is_thumbnail')->default(false);
+            $table->integer('quantity')->default(1);
             $table->timestamps();
+            $table->primary(['user_id', 'product_id']);
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('carts');
     }
 };

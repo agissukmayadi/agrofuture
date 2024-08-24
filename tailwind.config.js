@@ -11,11 +11,18 @@ module.exports = {
             colors: {
                 primary: "#1e1e1e",
                 secondary: "#fdb141",
+                dark: "#1c2333",
+                light: "#f1f4f9",
             },
             fontFamily: {
                 poppins: ["Poppins", "sans-serif"],
             },
         },
     },
-    plugins: [require("flowbite/plugin"), require("tailwindcss-textshadow")],
+    plugins: [
+        require("flowbite/plugin")({
+            charts: true,
+        }),
+        require("tailwindcss-textshadow"),
+    ],
 };

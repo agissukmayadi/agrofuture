@@ -1,4 +1,4 @@
-<form class="w-full" method="GET" action="{{ route('product') }}">
+<form class="w-full" method="GET" action="{{ route('products') }}">
     <div>
         <label class="font-medium">Product : </label>
         <div class="relative mt-2">
@@ -19,17 +19,18 @@
         <div class="mt-2">
             @foreach ($categories as $category)
                 <div class="flex items-center mb-3">
-                    <input id="{{ $category->slug }}" name="category[]" type="checkbox" value="{{ $category->slug }}"
+                    <input id="{{ $category->id }}" name="category_id[]" type="checkbox" value="{{ $category->id }}"
                         class="w-4 h-4 text-secondary bg-gray-100 border-gray-300 rounded focus:ring-secondary dark:focus:ring-secondary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                        @if (in_array($category->slug, request('category', []))) checked @endif>
-                    <label for="{{ $category->slug }}"
+                        @if (in_array($category->id, request('category_id', []))) checked @endif>
+                    <label for="{{ $category->id }}"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $category->name }}</label>
                 </div>
             @endforeach
         </div>
     </div>
-    @if (!empty(request('category')) || !empty(request('product')))
-        <a href="{{ route('product') }}" class="text-center flex items-center text-sm w-full justify-center gap-2">Clear
+    @if (!empty(request('category_id')) || !empty(request('product')))
+        <a href="{{ route('products') }}"
+            class="text-center flex items-center text-sm w-full justify-center gap-2">Clear
             All <i class="fa-solid fa-xmark"></i></a>
     @endif
     <button type="submit"

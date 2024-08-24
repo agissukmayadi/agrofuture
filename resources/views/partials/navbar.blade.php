@@ -16,11 +16,13 @@
                     @if (Auth::user()->role == 'customer')
                         <a href="{{ route('cart') }}" class="relative group">
                             <span
-                                class="absolute -top-1 -right-2 text-xs text-white inline-flex items-center justify-center px-1 py-0.5 leading-none  bg-red-600 group-hover:bg-red-800 rounded-full">5</span>
+                                class="absolute -top-1 -right-2 text-xs text-white inline-flex items-center justify-center px-1 py-0.5 leading-none  bg-red-600 group-hover:bg-red-800 rounded-full">{{ Auth::user()->carts()->whereHas('product', function ($query) {
+                                        $query->where('stock', '>', 0)->whereNull('deleted_at');
+                                    })->sum('quantity') }}</span>
                             <i
                                 class="fa-solid fa-cart-shopping text-secondary group-hover:text-secondary/80 text-lg"></i></a>
                     @endif
-                    <a href="{{ Auth::user()->role == 'customer' ? route('my-account') : '/dashboard' }}">
+                    <a href="{{ route('my-account') }}">
                         <svg class="w-[28px] h-[28px] text-secondary hover:text-secondary/80" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                             viewBox="0 0 24 24">
@@ -48,8 +50,8 @@
                         Home</a>
                 </li>
                 <li>
-                    <a href="{{ route('product') }}"
-                        class="block py-2 px-3 text-primary rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-secondary md:p-0  {{ Request::url() == route('product') || Request::url() == route('product.detail') ? 'bg-gray-300 md:text-secondary md:bg-transparent ' : ' md:text-white' }}">Product</a>
+                    <a href="{{ route('products') }}"
+                        class="block py-2 px-3 text-primary rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-secondary md:p-0  {{ request()->is('product*') ? 'bg-gray-300 md:text-secondary md:bg-transparent ' : ' md:text-white' }}">Product</a>
                 </li>
                 <li>
                     <a href="{{ route('about') }}"

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -29,9 +30,9 @@ class HomeController extends Controller
         }
 
         // Filter berdasarkan kategori
-        if ($request->has('category') && !empty($request->category)) {
+        if ($request->has('category_id') && !empty($request->category_id)) {
             $query->whereHas('category', function (Builder $builder) use ($request) {
-                $builder->whereIn('slug', $request->category);
+                $builder->whereIn('category_id', $request->category_id);
             });
         }
 
@@ -40,9 +41,16 @@ class HomeController extends Controller
         return view('product', compact('categories', 'products'));
     }
 
-    public function productDetail()
+    public function product_detail(string $id)
     {
-        return view('product_detail');
+        $product = Product::with(['images'])->withTrashed()->find($id);
+
+        if (!$product) {
+            abort(404);
+        }
+
+        $user = Auth::user();
+        return view('product_detail', compact(['product', 'user']));
     }
 
     public function about()
