@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->route()->named('admin.users.update')) {
+        if ($this->route()->named('admin.user.update')) {
             $rules = [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->id],
@@ -58,10 +58,10 @@ class UserRequest extends FormRequest
         $response = redirect($this->getRedirectUrl())
             ->withInput() // Memastikan input yang sebelumnya dikirimkan dikembalikan
             ->withErrors($validator->errors(), $this->errorBag); // Menyimpan error ke dalam session
-        
-        if ($this->route()->named('admin.users.store')) {
+
+        if ($this->route()->named('admin.user.store')) {
             $response->with('error_store', true);
-        } elseif ($this->route()->named('admin.users.update')) {
+        } elseif ($this->route()->named('admin.user.update')) {
             $response->with('error_update', true)->with('user-edit-id', $this->id);
         }
         throw new ValidationException($validator, $response);

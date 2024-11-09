@@ -9,17 +9,17 @@
                 <div class="text-center mt-3">
                     @if (Request::url() == route('login'))
                         <span class="  text-xs">Dont have an account? <a href="{{ route('register') }}"
-                                class="text-secondary font-semibold"> Sign
+                                class="text-green-600 font-semibold"> Sign
                                 up</a></span>
                     @else
                         <span class="  text-xs">Already have an account? <a href="{{ route('login') }}"
-                                class="text-secondary font-semibold"> Sign
+                                class="text-green-600 font-semibold"> Sign
                                 in</a></span>
                     @endif
                 </div>
             </div>
             <div
-                class="hidden md:flex md:w-1/2  bg-gradient-to-l  from-[#f76a35] to-secondary md:items-center justify-center">
+                class="hidden md:flex md:w-1/2  bg-gradient-to-l  from-green-500 to-green-600 md:items-center justify-center">
                 <div class="text-white text-center">
                     <h1 class=" font-bold text-2xl">Welcome to {{ Request::url() == route('login') ? 'login' : 'register' }}
                     </h1>

@@ -4,7 +4,7 @@
     <h1 class="text-3xl font-bold mb-5">Products</h1>
     <div class="w-full bg-white p-5 shadow-md">
         <div class="flex lg:justify-end">
-            <a href="{{ route('admin.products.create') }}"
+            <a href="{{ route('admin.product.create') }}"
                 class="block w-full lg:w-fit bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg text-sm px-5 py-2 text-center mb-2">Create
                 Product</a>
         </div>
@@ -152,7 +152,7 @@
                             </td>
                             <td class="px-6 py-4 lg:space-x-2">
                                 <a class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium"
-                                    href="{{ route('admin.products.edit', $product->id) }}">
+                                    href="{{ route('admin.product.edit', $product->id) }}">
                                     Edit
                                 </a>
                                 <button class="text-red-600 hover:text-red-800 hover:underline font-medium"
@@ -211,7 +211,7 @@
         $(document).ready(function() {
             $('[data-modal-target="delete-product-modal"]').on('click', function() {
                 const product = $(this).data('product');
-                let deleteUrl = "{{ route('admin.products.destroy', ':id') }}";
+                let deleteUrl = "{{ route('admin.product.destroy', ':id') }}";
                 deleteUrl = deleteUrl.replace(':id', product.id);
                 $('#delete-product-link').attr('href', deleteUrl);
             })

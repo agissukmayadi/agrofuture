@@ -30,35 +30,38 @@
                 <span class="text-xl font-semibold">Rp {{ number_format($product->price) }}</span>
                 <span class="text-sm text-gray-600">Stock Available:
                     <strong>{{ !$product->deleted_at ? $product->stock : 0 }}</strong></span>
-                <form class="flex gap-5 items-end" method="POST" action="{{ route('cart.store', $product->id) }}">
-                    @csrf
-                    <div class="max-w-xs">
-                        <label for="quantity-input"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose
-                            quantity:</label>
-                        <div class="relative flex items-center w-[8rem]">
-                            <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
-                                class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg h-10 disabled:cursor-not-allowed disabled:hover:bg-gray-100 "
-                                {{ $product->stock == 0 || $user->role == 'admin' || $product->deleted_at || $product->deleted_at ? 'disabled' : '' }}>
-                                <i class="fa-solid fa-minus p-3"></i>
-                            </button>
-                            <input type="text" id="quantity-input" data-input-counter data-input-counter-min="1"
-                                data-input-counter-max="{{ $product->stock }}" aria-describedby="helper-text-explanation"
-                                class="bg-gray-50 border-x-0  border-gray-300 h-10 text-center text-gray-900 text-sm block w-full py-2.5 focus:ring-0 focus:border-gray-300 disabled:cursor-not-allowed"
-                                placeholder="999" value="1" required name="quantity"
-                                {{ $product->stock == 0 || $user->role == 'admin' || $product->deleted_at ? 'disabled' : '' }} />
-                            <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
-                                class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg h-10 disabled:cursor-not-allowed disabled:hover:bg-gray-100 "
-                                {{ $product->stock == 0 || $user->role == 'admin' || $product->deleted_at ? 'disabled' : '' }}>
-                                <i class="fa-solid fa-plus p-3"></i>
-                            </button>
+                @if ((auth()->check() && auth()->user()->role == 'customer') || auth()->guest())
+                    <form class="flex gap-5 items-end" method="POST" action="{{ route('cart.store', $product->id) }}">
+                        @csrf
+                        <div class="max-w-xs">
+                            <label for="quantity-input"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose
+                                quantity:</label>
+                            <div class="relative flex items-center w-[8rem]">
+                                <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
+                                    class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg h-10 disabled:cursor-not-allowed disabled:hover:bg-gray-100 "
+                                    {{ $product->stock == 0 || $product->deleted_at || $product->deleted_at ? 'disabled' : '' }}>
+                                    <i class="fa-solid fa-minus p-3"></i>
+                                </button>
+                                <input type="text" id="quantity-input" data-input-counter data-input-counter-min="1"
+                                    data-input-counter-max="{{ $product->stock }}"
+                                    aria-describedby="helper-text-explanation"
+                                    class="bg-gray-50 border-x-0  border-gray-300 h-10 text-center text-gray-900 text-sm block w-full py-2.5 focus:ring-0 focus:border-gray-300 disabled:cursor-not-allowed"
+                                    placeholder="999" value="1" required name="quantity"
+                                    {{ $product->stock == 0 || $product->deleted_at ? 'disabled' : '' }} />
+                                <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
+                                    class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg h-10 disabled:cursor-not-allowed disabled:hover:bg-gray-100 "
+                                    {{ $product->stock == 0 || $product->deleted_at ? 'disabled' : '' }}>
+                                    <i class="fa-solid fa-plus p-3"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit"
-                        class="bg-secondary/80 hover:bg-secondary text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-not-allowed disabled:hover:bg-secondary {{ $product->stock == 0 || $user->role == 'admin' ? 'opacity-50' : '' }}"
-                        {{ $product->stock == 0 || $user->role == 'admin' || $product->deleted_at ? 'disabled' : '' }}><i
-                            class="fa-solid fa-cart-shopping text-white  mr-3 "></i>{{ $product->stock == 0 ? 'Out of stock' : 'Add to cart' }}</button>
-                </form>
+                        <button type="submit"
+                            class="bg-green-600/80 hover:bg-green-600 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-not-allowed disabled:hover:bg-green-600 {{ $product->stock == 0 ? 'opacity-50' : '' }}"
+                            {{ $product->stock == 0 || $product->deleted_at ? 'disabled' : '' }}><i
+                                class="fa-solid fa-cart-shopping text-white  mr-3 "></i>{{ $product->stock == 0 ? 'Out of stock' : 'Add to cart' }}</button>
+                    </form>
+                @endif
             </div>
         </div>
     </section>

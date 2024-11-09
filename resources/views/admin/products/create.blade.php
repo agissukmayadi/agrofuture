@@ -4,7 +4,7 @@
     <h1 class="text-3xl font-bold mb-5">Products</h1>
     <div class="w-full bg-white p-5 shadow-md">
         <h3 class="text-lg font-bold mb-2">Create new product</h3>
-        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 col-span-1 lg:grid-cols-2 lg:gap-6">
                 <div class="lg:col-span-2">

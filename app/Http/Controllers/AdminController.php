@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\User;
@@ -35,10 +36,10 @@ class AdminController extends Controller
         }
 
         $categories = $categoriesQuery->paginate(10)->withQueryString();
-        return response()->view('admin.categories', compact(['user', 'categories']));
+        return response()->view('admin.categories.index', compact(['user', 'categories']));
     }
 
-    public function categories_store(CategoryRequest $request)
+    public function category_store(CategoryRequest $request)
     {
         $data = $request->validated();
         Category::create($data);
@@ -46,7 +47,7 @@ class AdminController extends Controller
         return redirect()->route('admin.categories')->with('success', 'Category created successfully');
     }
 
-    public function categories_update(CategoryRequest $categoryRequest, string $id)
+    public function category_update(CategoryRequest $categoryRequest, string $id)
     {
         $data = $categoryRequest->validated();
         $category = Category::find($id);
@@ -59,7 +60,7 @@ class AdminController extends Controller
         return redirect()->route('admin.categories')->with('success', 'Category updated successfully');
     }
 
-    public function categories_destroy(string $id)
+    public function category_destroy(string $id)
     {
         $category = Category::find($id);
 
@@ -76,7 +77,9 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $categories = Category::all();
-        $productsQuery = Product::with(['category']);
+        $productsQuery = Product::with(['category' => function($query){
+            $query->withTrashed();
+        }]);
 
         if ($request->has('name') && !empty($request->name)) {
             $productsQuery->where('name', 'like', '%' . $request->name . '%');
@@ -88,17 +91,17 @@ class AdminController extends Controller
         }
 
         $products = $productsQuery->paginate(10)->withQueryString();
-        return response()->view('admin.products', compact(['user', 'categories', 'products']));
+        return response()->view('admin.products.index', compact(['user', 'categories', 'products']));
     }
 
-    public function products_create(Request $request)
+    public function product_create(Request $request)
     {
         $user = Auth::user();
         $categories = Category::all();
-        return response()->view('admin.products_create', compact(['user', 'categories']));
+        return response()->view('admin.products.create', compact(['user', 'categories']));
     }
 
-    public function products_store(ProductRequest $request)
+    public function product_store(ProductRequest $request)
     {
         $data = $request->validated();
 
@@ -131,7 +134,7 @@ class AdminController extends Controller
         return redirect()->route('admin.products')->with('success', 'Product created successfully');
     }
 
-    public function products_edit(Request $request, string $id)
+    public function product_edit(Request $request, string $id)
     {
         $user = Auth::user();
         $categories = Category::all();
@@ -139,10 +142,10 @@ class AdminController extends Controller
         if (!$product) {
             return redirect()->route('admin.products')->with('error', 'Product not found');
         }
-        return response()->view('admin.products_edit', compact(['user', 'categories', 'product']));
+        return response()->view('admin.products.edit', compact(['user', 'categories', 'product']));
     }
 
-    public function products_update(ProductRequest $request, string $id)
+    public function product_update(ProductRequest $request, string $id)
     {
 
         $data = $request->validated();
@@ -185,7 +188,7 @@ class AdminController extends Controller
 
     }
 
-    public function products_images_delete(string $id)
+    public function product_images_delete(string $id)
     {
         $productImage = ProductImage::with(['product'])->find($id);
         if (!$productImage) {
@@ -198,18 +201,12 @@ class AdminController extends Controller
         return response()->json(['message' => 'Product image deleted successfully']);
     }
 
-    public function products_destroy(string $id)
+    public function product_destroy(string $id)
     {
         $product = Product::find($id);
         if (!$product) {
             return redirect()->route('admin.products')->with('error', 'Product not found');
         }
-        // foreach ($product->images as $image) {
-        //     if (Storage::disk('public')->exists('img/products/' . $image->name)) {
-        //         Storage::disk('public')->delete('img/products/' . $image->name);
-        //     }
-        // }
-        // $product->images()->delete();
         $product->delete();
         return redirect()->route('admin.products')->with('success', 'Product deleted successfully');
     }
@@ -224,17 +221,17 @@ class AdminController extends Controller
 
         $users = $usersQuery->paginate(10)->withQueryString();
         $user = Auth::user();
-        return response()->view('admin.users', compact(['users', 'user']));
+        return response()->view('admin.users.index', compact(['users', 'user']));
     }
 
-    public function users_store(UserRequest $request)
+    public function user_store(UserRequest $request)
     {
         $data = $request->validated();
         $user = User::create($data);
         return redirect()->route('admin.users')->with('success', 'User created successfully');
     }
 
-    public function users_destroy(Request $request, string $id)
+    public function user_destroy(Request $request, string $id)
     {
         $user = User::find($id);
         if (!$user) {
@@ -244,7 +241,7 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'User deleted successfully');
     }
 
-    public function users_update(UserRequest $request, string $id)
+    public function user_update(UserRequest $request, string $id)
     {
         $data = $request->validated();
         $user = User::find($id);
@@ -253,5 +250,86 @@ class AdminController extends Controller
         }
         $user->update($data);
         return redirect()->route('admin.users')->with('success', 'User updated successfully');
+    }
+
+    public function orders(Request $request)
+    {
+        $user = Auth::user();
+
+        $ordersQuery = Order::with([
+            'user' => function ($query) {
+                $query->withTrashed();
+            }
+        ]);
+
+        if ($request->has('invoice_number') && !empty($request->invoice_number)) {
+            $ordersQuery->where('invoice_number', 'like', '%' . $request->invoice_number . '%');
+        }
+        if ($request->has('status') && !empty($request->status)) {
+            $ordersQuery->whereIn('status', $request->status);
+        }
+
+        $orders = $ordersQuery->paginate(10)->withQueryString();
+        return response()->view('admin.orders.index', compact(['user', 'orders']));
+    }
+
+    public function order_detail(Request $request, $id)
+    {
+        $order = Order::where('id', $id)->with([
+            'orderDetails' => function ($query) {
+                $query->with([
+                    'product' => function ($query) {
+                        $query->withTrashed()
+                            ->with('image_thumbnail');
+                    }
+                ]);
+            },
+            'user' => function ($query) {
+                $query->withTrashed();
+            }
+        ])->with('shipment')->first();
+        if (!$order) {
+            abort(404);
+        }
+
+        $subtotal = $order->orderDetails->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
+
+        return response()->view('admin.orders.detail', compact(['order', 'subtotal']));
+    }
+
+    public function order_tracking_number(Request $request, $id)
+    {
+        $order = Order::where('id', $id)->first();
+
+        $order->shipment()->update([
+            'tracking_number' => $request->tracking_number
+        ]);
+
+        $order->shipped_at = now();
+        $order->status = 'SHIPPED';
+        $order->save();
+
+        return redirect()->route('admin.order.detail', $id)->with('success', 'Tracking number updated successfully');
+    }
+
+    public function order_cancel(Request $request, string $id)
+    {
+        $request->validate([
+            'note_cancelled' => ['required', 'string']
+        ]);
+        $order = Order::where('id', $id)->first();
+        $order->cancelled_at = now();
+        $order->note_cancelled = "Admin :" . $request->note_cancelled;
+        $order->status = 'CANCELLED';
+        $order->save();
+
+        foreach ($order->orderDetails as $item) {
+            $product = $item->product;
+            $product->stock += $item->quantity;
+            $product->save();
+        }
+        return redirect()->route('admin.order.detail', $id)->with('success', 'Order Cancelled');
     }
 }

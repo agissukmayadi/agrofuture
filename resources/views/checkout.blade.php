@@ -153,7 +153,7 @@
                             </div>
                         </div>
                         <button type="submit" id="checkout-button"
-                            class=" mt-6 shadow-md w-full bg-secondary/90 hover:bg-secondary transition-all text-white font-bold py-2 px-4 rounded disabled:bg-gray-400"
+                            class=" mt-6 shadow-md w-full bg-green-600/90 hover:bg-green-600 transition-all text-white font-bold py-2 px-4 rounded disabled:bg-gray-400"
                             disabled>Checkout</button>
                     </div>
                 </div>

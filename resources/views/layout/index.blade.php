@@ -72,3 +72,22 @@
     </div>
     @include('partials.footer')
 @endsection
+
+@if (!Route::is('cart', 'checkout', 'product.detail'))
+    @push('scripts')
+        <script>
+            const navbar = document.getElementById('navbar');
+            navbar.classList.remove('bg-green-700');
+            navbar.classList.add('bg-transparent');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) { // ganti nilai 50 sesuai preferensi
+                    navbar.classList.remove('bg-transparent');
+                    navbar.classList.add('bg-green-700');
+                } else {
+                    navbar.classList.remove('bg-green-700');
+                    navbar.classList.add('bg-transparent');
+                }
+            });
+        </script>
+    @endpush
+@endif

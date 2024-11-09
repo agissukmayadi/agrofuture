@@ -9,14 +9,14 @@
                     @if ($cart->count() > 0)
                         @foreach ($cart as $item)
                             <div class="bg-white rounded-lg shadow-sm w-full flex flex-row p-5 items-stretch gap-4">
-                                <a href="{{ route('product.detail', $item->product->id) }}" class=" aspect-square w-[15%] ">
+                                <a href="{{ route('product.detail', $item->product->slug) }}" class=" aspect-square w-[15%] ">
                                     <img src="{{ asset('/storage/img/products') . '/' . $item->product->image_thumbnail->name }}"
                                         class="w-full" alt="">
                                 </a>
                                 <div class="flex flex-col grow justify-between">
                                     <div class="space-y-1">
-                                        <a href="{{ route('product.detail', $item->product->id) }}"
-                                            class="text-sm hover:text-secondary transition-all">{{ $item->product->name }}</a>
+                                        <a href="{{ route('product.detail', $item->product->slug) }}"
+                                            class="text-sm hover:text-green-600 transition-all">{{ $item->product->name }}</a>
                                         <p class="text-sm font-semibold">Rp. {{ number_format($item->product->price) }}
                                         </p>
                                     </div>
@@ -60,7 +60,7 @@
                             class="w-full bg-white px-6 py-6 rounded-md shadow-md flex flex-col gap-3 items-start lg:flex-row lg:justify-between lg:items-cente ">
                             <p>No products in the cart</p>
                             <a href="{{ route('products') }}"
-                                class="text-primary transition-all bg-secondary/80 hover:bg-secondary px-4 py-2">Browse
+                                class="text-white transition-all bg-green-600/80 hover:bg-green-600 px-4 py-2">Browse
                                 Product</a>
                         </div>
                     @endif
@@ -75,7 +75,7 @@
                             <div class="space-y-6 ">
                                 @foreach ($itemNotAvailable as $item)
                                     <div class="bg-white rounded-lg w-full flex flex-row items-stretch gap-4">
-                                        <a href="{{ route('product.detail', $item->product->id) }}"
+                                        <a href="{{ route('product.detail', $item->product->slug) }}"
                                             class=" aspect-square w-[15%] relative">
                                             <img src="{{ asset('/storage/img/products') . '/' . $item->product->image_thumbnail->name }}"
                                                 class="w-full" alt="">
@@ -87,7 +87,7 @@
                                         <div class="flex flex-col grow justify-between">
                                             <div class="space-y-1">
                                                 <a href="{{ route('product.detail', $item->product->id) }}"
-                                                    class="text-sm text-primary/50 hover:text-secondary transition-all">{{ $item->product->name }}</a>
+                                                    class="text-sm text-primary/50 hover:text-green-600 transition-all">{{ $item->product->name }}</a>
                                                 <p class="text-sm font-semibold text-primary/50">Rp.
                                                     {{ number_format($item->product->price) }}
                                                 </p>
@@ -120,7 +120,7 @@
                     </div>
                     <form action="{{ route('checkout') }}" method="GET" id="checkout-form">
                         <button type="submit"
-                            class="w-full block text-center px-4 py-2 rounded-lg mt-4 {{ $total > 0 ? 'bg-secondary hover:bg-secondary/80 text-white' : 'bg-gray-300 cursor-not-allowed' }}"
+                            class="w-full block text-center px-4 py-2 rounded-lg mt-4 {{ $total > 0 ? 'bg-green-600 hover:bg-green-600/80 text-white' : 'bg-gray-300 cursor-not-allowed' }}"
                             {{ $total <= 0 ? 'disabled' : '' }}>Checkout</button>
                     </form>
                 </div>
@@ -154,13 +154,13 @@
                         Yes, I'm sure
                     </a>
                     <button data-modal-hide="delete-cart-modal" type="button"
-                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-secondary focus:z-10 focus:ring-4 focus:ring-gray-100">No,
+                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-green-600 focus:z-10 focus:ring-4 focus:ring-gray-100">No,
                         cancel</button>
                 </div>
             </div>
         </div>
     </div>
-    
+
 @endsection
 
 @section('script')
@@ -193,3 +193,5 @@
         })
     </script>
 @endsection
+
+

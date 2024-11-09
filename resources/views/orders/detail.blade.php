@@ -58,10 +58,6 @@
                                         $bgColor = 'bg-red-100';
                                         $textColor = 'text-red-800';
                                         break;
-                                    case 'failed':
-                                        $bgColor = 'bg-red-100';
-                                        $textColor = 'text-red-800';
-                                        break;
                                     default:
                                         $bgColor = 'bg-gray-100';
                                         $textColor = 'text-gray-800';
@@ -75,8 +71,8 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-x-5">
-                            <p class="text-secondary">Detail Status</p>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-secondary" aria-hidden="true"
+                            <p class="text-green-600">Detail Status</p>
+                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0 text-green-600" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 5 5 1 1 5" />
@@ -92,7 +88,7 @@
                                 <div class="flex gap-2  items-center justify-between shrink-0 w-[50%] md:w-[40%]">
                                     <p>{{ \Carbon\Carbon::parse($order->success_at)->translatedFormat('d F Y, H:i') }}</p>
                                     <span
-                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'SUCCESS' ? 'bg-secondary' : 'bg-gray-400' }} rounded-full"></span>
+                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'SUCCESS' ? 'bg-green-600' : 'bg-gray-400' }} rounded-full"></span>
                                 </div>
                                 <div class="flex flex-col w-[50%] md:w-full">
                                     <p class="">Pesanan selesai</p>
@@ -104,7 +100,7 @@
                                 <div class="flex gap-2  items-center justify-between shrink-0 w-[50%] md:w-[40%]">
                                     <p>{{ \Carbon\Carbon::parse($order->shipped_at)->translatedFormat('d F Y, H:i') }}</p>
                                     <span
-                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'SHIPPED' ? 'bg-secondary' : 'bg-gray-400' }} rounded-full"></span>
+                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'SHIPPED' ? 'bg-green-600' : 'bg-gray-400' }} rounded-full"></span>
                                 </div>
                                 <div class="flex flex-col w-[50%] md:w-full">
                                     <p class="">Pesanan dikirim</p>
@@ -116,11 +112,11 @@
                                 <div class="flex gap-2  items-center justify-between shrink-0 w-[50%] md:w-[40%]">
                                     <p>{{ \Carbon\Carbon::parse($order->cancelled_at)->translatedFormat('d F Y, H:i') }}</p>
                                     <span
-                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'CANCELLED' ? 'bg-secondary' : 'bg-gray-400' }} rounded-full"></span>
+                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'CANCELLED' ? 'bg-green-600' : 'bg-gray-400' }} rounded-full"></span>
                                 </div>
                                 <div class="flex flex-col w-[50%] md:w-full">
                                     <p class="">Pesanan dibatalkan</p>
-                                    <p>Alasan: {{ $order->note_canceled }}</p>
+                                    <p>Alasan: {{ $order->note_cancelled }}</p>
                                 </div>
                             </div>
                         @endif
@@ -129,7 +125,7 @@
                                 <div class="flex gap-2  items-center justify-between shrink-0 w-[50%] md:w-[40%]">
                                     <p>{{ \Carbon\Carbon::parse($order->paid_at)->translatedFormat('d F Y, H:i') }}</p>
                                     <span
-                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'PAID' ? 'bg-secondary' : 'bg-gray-400' }} rounded-full"></span>
+                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'PAID' ? 'bg-green-600' : 'bg-gray-400' }} rounded-full"></span>
                                 </div>
                                 <div class="flex flex-col w-[50%] md:w-full">
                                     <p class="">Pesanan dibayar</p>
@@ -142,7 +138,7 @@
                                     <p>{{ \Carbon\Carbon::parse($order->cancelled_at)->translatedFormat('d F Y, H:i') }}
                                     </p>
                                     <span
-                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'CANCELLED' ? 'bg-secondary' : 'bg-gray-400' }} rounded-full"></span>
+                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'CANCELLED' ? 'bg-green-600' : 'bg-gray-400' }} rounded-full"></span>
                                 </div>
                                 <div class="flex flex-col w-[50%] md:w-full">
                                     <p class="">Pesanan dibatalkan</p>
@@ -150,25 +146,13 @@
                                 </div>
                             </div>
                         @endif
-                        @if ($order->failed_at != null)
-                            <div class="flex items-center">
-                                <div class="flex gap-2  items-center justify-between shrink-0 w-[50%] md:w-[40%]">
-                                    <p>{{ \Carbon\Carbon::parse($order->failed_at)->translatedFormat('d F Y, H:i') }}</p>
-                                    <span
-                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'FAILED' ? 'bg-secondary' : 'bg-gray-400' }} rounded-full"></span>
-                                </div>
-                                <div class="flex flex-col w-[50%] md:w-full">
-                                    <p class="">Pesanan gagal</p>
-                                    <p>{{ $order->note_failed }}</p>
-                                </div>
-                            </div>
-                        @endif
+
                         @if ($order->created_at != null)
                             <div class="flex items-center">
                                 <div class="flex gap-2  items-center justify-between shrink-0 w-[50%] md:w-[40%]">
                                     <p>{{ \Carbon\Carbon::parse($order->created_at)->translatedFormat('d F Y, H:i') }}</p>
                                     <span
-                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'PENDING' ? 'bg-secondary' : 'bg-gray-400' }} rounded-full"></span>
+                                        class="flex w-3 h-3 me-3 shrink-0 {{ $order->status == 'PENDING' ? 'bg-green-600' : 'bg-gray-400' }} rounded-full"></span>
                                 </div>
                                 <div class="flex flex-col w-[50%] md:w-full">
                                     <p class="">Pesanan dibuat</p>
@@ -182,7 +166,7 @@
             <div class="mt-4 space-y-1">
                 <div class="flex justify-between">
                     <p>No Invoice</p>
-                    <p class="text-secondary">{{ $order->invoice_number }}</p>
+                    <p class="text-green-600">{{ $order->invoice_number }}</p>
                 </div>
                 <div class="flex justify-between">
                     <p>Tanggal Pembelian</p>
@@ -272,7 +256,7 @@
                 <h4 class="font-medium text-primary text-base">Rincian Pembayaran</h4>
                 @if ($order->status == 'PENDING')
                     <button data-snap-token="{{ $order->snap_token }}"
-                        class="pay-button block text-center text-secondary border border-secondary hover:bg-secondary hover:text-white transition-all font-medium  px-4 py-2 text-sm">Bayar</button>
+                        class="pay-button block text-center text-green-600 border border-green-600 hover:bg-green-600 hover:text-white transition-all font-medium  px-4 py-2 text-sm">Bayar</button>
                 @endif
             </div>
             <hr>
@@ -309,8 +293,8 @@
                     class="complete-order-button w-full  block text-center text-green-700 border border-green-700 hover:bg-green-700 hover:text-white transition-all py-1 rounded-lg font-medium text-lg cursor-pointer">Pesanan
                     diterima</button>
             @endif
-            <a href="{{ route('my-account.orders') }}"
-                class="block text-center text-white bg-secondary/90 hover:bg-secondary py-1 rounded-lg font-medium text-lg cursor-pointer">Kembali</a>
+            <a href="{{ route('orders') }}"
+                class="block text-center text-white bg-green-600/90 hover:bg-green-600 py-1 rounded-lg font-medium text-lg cursor-pointer">Kembali</a>
         </div>
     </div>
 @endsection

@@ -134,7 +134,7 @@ class CheckoutController extends Controller
             // Commit transaksi jika semua berhasil
             DB::commit();
 
-            return redirect()->route('my-account.order.detail', $order->id)->with('directPay', true);
+            return redirect()->route('order.detail', $order->id)->with('directPay', true);
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::rollBack();

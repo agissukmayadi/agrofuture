@@ -30,10 +30,11 @@ class CartController extends Controller
 
         $itemNotAvailable = $user->carts()->unavailableItem()->with(
             [
-            'product' => function ($query) {
-                $query->withTrashed()->with('image_thumbnail');
-            }
-        ])->get();
+                'product' => function ($query) {
+                    $query->withTrashed()->with('image_thumbnail');
+                }
+            ]
+        )->get();
 
         return view('cart', compact(['user', 'cart', 'total', 'itemNotAvailable']));
     }
@@ -51,6 +52,7 @@ class CartController extends Controller
      */
     public function store(Request $request, string $id)
     {
+        // dd($id);
         $user = Auth::user();
         $product = Product::find($id);
         if (!$product) {
@@ -63,14 +65,14 @@ class CartController extends Controller
             if ($user->carts()->where('product_id', $id)->exists()) {
                 $item = $user->carts()->where('product_id', $id)->first();
                 if ($item->quantity + $request->quantity > $product->stock) {
-                    return redirect()->route('product.detail', $id)->with('toast-error', 'This product has been added to cart with max quantity');
+                    return redirect()->route('product.detail', $product->slug)->with('toast-error', 'This product has been added to cart with max quantity');
                 }
                 $item->quantity += $request->quantity;
                 $item->save();
             } else {
                 $user->cartProducts()->attach($product, ['quantity' => $request->quantity]);
             }
-            return redirect()->route('product.detail', $id)->with('toast-success', 'Product added to cart successfully');
+            return redirect()->route('product.detail', $product->slug)->with('toast-success', 'Product added to cart successfully');
         }
     }
 

@@ -24,5 +24,6 @@ module.exports = {
             charts: true,
         }),
         require("tailwindcss-textshadow"),
+        require("@tailwindcss/line-clamp"),
     ],
 };

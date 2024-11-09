@@ -6,34 +6,30 @@
             class="text-sm font-medium text-center text-gray-500 border-b-2 bg-white border-gray-200 w-full overflow-x-auto overflow-y-hidden">
             <ul class="flex -mb-px w-full">
                 <li class="me-2">
-                    <a href="{{ route('my-account.orders') }}"
-                        class=" inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == null ? 'text-secondary border-secondary' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">
+                    <a href="{{ route('orders') }}"
+                        class=" inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == null ? 'text-green-600 border-green-600' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">
                         Semua</a>
                 </li>
                 <li class="me-2">
-                    <a href="{{ route('my-account.orders', ['status' => 'PENDING']) }}"
-                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'PENDING' ? 'text-secondary border-secondary' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">
+                    <a href="{{ route('orders', ['status' => 'PENDING']) }}"
+                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'PENDING' ? 'text-green-600 border-green-600' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">
                         Belum Dibayar</a>
                 </li>
                 <li class="me-2">
-                    <a href="{{ route('my-account.orders', ['status' => 'PAID']) }}"
-                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'PAID' ? 'text-secondary border-secondary' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Dibayar</a>
+                    <a href="{{ route('orders', ['status' => 'PAID']) }}"
+                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'PAID' ? 'text-green-600 border-green-600' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Dibayar</a>
                 </li>
                 <li class="me-2">
-                    <a href="{{ route('my-account.orders', ['status' => 'SHIPPED']) }}"
-                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'SHIPPED' ? 'text-secondary border-secondary' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Dikirim</a>
+                    <a href="{{ route('orders', ['status' => 'SHIPPED']) }}"
+                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'SHIPPED' ? 'text-green-600 border-green-600' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Dikirim</a>
                 </li>
                 <li class="me-2">
-                    <a href="{{ route('my-account.orders', ['status' => 'SUCCESS']) }}"
-                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'SUCCESS' ? 'text-secondary border-secondary' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Selesai</a>
+                    <a href="{{ route('orders', ['status' => 'SUCCESS']) }}"
+                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'SUCCESS' ? 'text-green-600 border-green-600' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Selesai</a>
                 </li>
                 <li class="me-2">
-                    <a href="{{ route('my-account.orders', ['status' => 'CANCELLED']) }}"
-                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'CANCELLED' ? 'text-secondary border-secondary' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Dibatalkan</a>
-                </li>
-                <li class="me-2">
-                    <a href="{{ route('my-account.orders', ['status' => 'FAILED']) }}"
-                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'FAILED' ? 'text-secondary border-secondary' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Gagal</a>
+                    <a href="{{ route('orders', ['status' => 'CANCELLED']) }}"
+                        class="inline-block p-4 border-b-2 rounded-t-lg {{ request()->status == 'CANCELLED' ? 'text-green-600 border-green-600' : 'hover:text-gray-600 hover:border-gray-300 border-transparent' }} ">Dibatalkan</a>
                 </li>
             </ul>
         </div>
@@ -66,7 +62,7 @@
                 <div class="bg-white w-full px-4 py-3 rounded-lg shadow-md">
                     <div class="flex flex-row justify-between items-center">
                         <div class="flex flex-row justify-center items-center gap-3">
-                            <i class="fa-solid fa-bag-shopping text-3xl text-secondary"></i>
+                            <i class="fa-solid fa-bag-shopping text-3xl text-green-600"></i>
                             <div class="flex flex-col">
                                 <p class="font-semibold">Belanja</p>
                                 <p>{{ \Carbon\Carbon::parse($order->created_at)->translatedFormat('d F Y') }}</p>
@@ -94,10 +90,6 @@
                                     $bgColor = 'bg-red-100';
                                     $textColor = 'text-red-800';
                                     break;
-                                case 'failed':
-                                    $bgColor = 'bg-red-100';
-                                    $textColor = 'text-red-800';
-                                    break;
                                 default:
                                     $bgColor = 'bg-gray-100';
                                     $textColor = 'text-gray-800';
@@ -120,13 +112,13 @@
                         <div class="flex flex-col w-[85%]">
                             <div class="flex flex-col h-full justify-between">
                                 <div class="w-full">
-                                    <a href="{{ route('my-account.order.detail', $order->id) }}"
+                                    <a href="{{ route('order.detail', $order->id) }}"
                                         class="font-semibold line-clamp-2 w-full">
                                         {{ $order->orderDetails[0]->product->name }}</a>
 
                                     @if ($order->orderDetails->count() > 1)
                                         <a class="text-xs"
-                                            href="{{ route('my-account.order.detail', $order->id) }}">+{{ $order->orderDetails->count() - 1 }}
+                                            href="{{ route('order.detail', $order->id) }}">+{{ $order->orderDetails->count() - 1 }}
                                             Produk lainnya</a>
                                     @endif
                                 </div>
@@ -138,7 +130,7 @@
                                     <div class=" gap-2 hidden lg:flex">
                                         @if ($order->status == 'PENDING')
                                             <button
-                                                class="pay-button text-secondary  border border-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
+                                                class="pay-button text-green-600  border border-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
                                                 data-snap-token='{{ $order->snap_token }}'>Bayar</button>
                                         @elseif ($order->status == 'SHIPPED')
                                             <button data-modal-target="complete-order-modal"
@@ -147,8 +139,8 @@
                                                 class=" complete-order-button text-green-600  border border-green-600 hover:bg-green-600 hover:text-white transition-all font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer">Selesai</button>
                                         @endif
 
-                                        <a href="{{ route('my-account.order.detail', $order->id) }}"
-                                            class=" text-white bg-secondary/90 hover:bg-secondary font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer">Detail</a>
+                                        <a href="{{ route('order.detail', $order->id) }}"
+                                            class=" text-white bg-green-600/90 hover:bg-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer">Detail</a>
 
                                         @if ($order->status == 'PENDING')
                                             <button data-modal-target="cancel-order-modal"
@@ -171,7 +163,7 @@
                 class="w-full bg-white px-6 py-6 rounded-md shadow-md flex flex-col gap-3 items-start lg:flex-row lg:justify-between lg:items-center ">
                 <p>No orders</p>
                 <a href="{{ route('products') }}"
-                    class="bg-secondary/90 hover:bg-secondary transition-all text-primary font-medium px-4 py-2 {{ request()->status !== null ? 'hidden' : '' }}">Browse
+                    class="bg-green-600/90 hover:bg-green-600 transition-all text-white font-medium px-4 py-2">Browse
                     Products</a>
             </div>
         @endif

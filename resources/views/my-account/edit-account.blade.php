@@ -31,7 +31,7 @@
         <div class="">
             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
             <input type="text" id="name" name="name"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-secondary"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-green-600"
                 value="{{ Auth::user()->name }}" placeholder="John Doe" required />
             @error('name')
                 <small class="text-red-500 text-xs">{{ $message }}</small>
@@ -40,7 +40,7 @@
         <div class="">
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
             <input type="email" id="email" name="email"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-secondary"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-green-600"
                 value="{{ Auth::user()->email }}" placeholder="example@email.com" required />
             @error('email')
                 <small class="text-red-500 text-xs">{{ $message }}</small>
@@ -58,7 +58,7 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current
                         password</label>
                     <input type="password" id="current_password" name="current_password"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-secondary"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-green-600"
                         placeholder="Current Password" />
                     @error('current_password')
                         <small class="text-red-500 text-xs">{{ $message }}</small>
@@ -68,7 +68,7 @@
                     <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New
                         password</label>
                     <input type="password" id="password" name="password"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-secondary"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-green-600"
                         placeholder="New Password" />
                     @error('password')
                         <small class="text-red-500 text-xs">{{ $message }}</small>
@@ -78,13 +78,13 @@
                     <label for="password_confirmation"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm new password</label>
                     <input type="password" id="password_confirmation" name="password_confirmation"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-secondary"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 focus:ring-0 focus:border-green-600"
                         placeholder="Confirm New Password" />
                 </div>
             </div>
         </div>
         <button type="submit"
-            class="text-white bg-secondary hover:bg-secondary/80 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Save
+            class="text-white bg-green-600 hover:bg-green-600/80 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Save
             Changes</button>
     </form>
 @endsection

@@ -24,20 +24,21 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->route()->named('admin.categories.store')) {
+        if ($this->route()->named('admin.category.store')) {
             return [
                 "name" => [
                     "required",
                     "string",
-                    "unique:categories,name",
+                    Rule::unique('categories', 'name')->whereNull('deleted_at'),
                     "max:255"
                 ]
             ];
-        } elseif ($this->route()->named('admin.categories.update')) {
+        } elseif ($this->route()->named('admin.category.update')) {
             return [
                 "name" => [
                     "required",
-                    "string", "unique:categories,name," . $this->id,
+                    "string",
+                    Rule::unique('categories', 'name')->ignore($this->id)->whereNull('deleted_at'),
                     "max:255"
                 ]
             ];
@@ -49,9 +50,9 @@ class CategoryRequest extends FormRequest
         $response = redirect($this->getRedirectUrl())
             ->withInput() // Memastikan input yang sebelumnya dikirimkan dikembalikan
             ->withErrors($validator->errors(), $this->errorBag); // Menyimpan error ke dalam session
-        if ($this->route()->named('admin.categories.store')) {
+        if ($this->route()->named('admin.category.store')) {
             $response->with('error_store', true);
-        } elseif ($this->route()->named('admin.categories.update')) {
+        } elseif ($this->route()->named('admin.category.update')) {
             $response->with('error_update', true)->with('category-edit-id', $this->id);
         }
         throw new ValidationException($validator, $response);

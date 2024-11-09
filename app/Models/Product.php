@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, HasUuids;
+    use HasFactory, SoftDeletes, HasUuids, Sluggable;
     protected $keyType = 'string';
     public $incrementing = false;
     /**
@@ -23,6 +23,7 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
+        'slug',
         'category_id',
         'description',
         'price',
@@ -61,5 +62,17 @@ class Product extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+    /**
+     * Return the sluggable configuration array for this model.
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
     }
 }

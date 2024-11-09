@@ -1,0 +1,13 @@
+INSTALATION STEP :
+1. Extract
+2. Import SQL  : agrofuture.sql (Database name : agrofuture)
+3. npm run dev
+4. php artisan serve
+
+USER ADMIN:
+email : admin@gmail.com
+password : !P4ssw0rd110011
+
+Note :
+Fitur Payment tidak bisa karena membutuhkan simulator Owner, tetapi fitur
+tersebut berjalan lancar jika memiliki hak akses owner

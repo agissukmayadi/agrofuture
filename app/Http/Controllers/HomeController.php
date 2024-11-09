@@ -30,9 +30,9 @@ class HomeController extends Controller
         }
 
         // Filter berdasarkan kategori
-        if ($request->has('category_id') && !empty($request->category_id)) {
+        if ($request->has('category') && !empty($request->category)) {
             $query->whereHas('category', function (Builder $builder) use ($request) {
-                $builder->whereIn('category_id', $request->category_id);
+                $builder->whereIn('slug', $request->category);
             });
         }
 
@@ -41,9 +41,9 @@ class HomeController extends Controller
         return view('product', compact('categories', 'products'));
     }
 
-    public function product_detail(string $id)
+    public function product_detail(string $slug)
     {
-        $product = Product::with(['images'])->withTrashed()->find($id);
+        $product = Product::with(['images'])->withTrashed()->where('slug', $slug)->first();
 
         if (!$product) {
             abort(404);
@@ -61,5 +61,15 @@ class HomeController extends Controller
     public function contact()
     {
         return view('contact');
+    }
+
+    public function tourism()
+    {
+        return view('tourism');
+    }
+
+    public function  tourism_detail(string $slug)
+    {
+        return view('tourism_detail');
     }
 }

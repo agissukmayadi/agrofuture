@@ -7,7 +7,7 @@
         <div class="h-full overflow-y-auto bg-dark text-light">
             <div class="px-4">
                 <div class="flex items-center justify-between mb-4 pt-4">
-                    <a class="font-semibold text-3xl block" href="{{ route('admin') }}">Elvicto.</a>
+                    <a class="font-semibold text-3xl block" href="{{ route('admin') }}">Leuwimalang.</a>
                     <button data-drawer-target="sidebar" data-drawer-toggle="sidebar" aria-controls="sidebar" type="button"
                         class="sm:hidden">
                         <i class="fa-solid fa-bars text-xl hover:bg-gray-700 px-2 py-1 rounded-md transition"></i>
@@ -39,8 +39,8 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.orders') }}"
-                            class="flex items-center px-3 py-2 rounded-sm hover:bg-gray-700 {{ Request::url() == route('admin.orders') ? 'bg-gray-700' : '' }}">
-                            <i class="fa-solid fa-file-invoice"></i>
+                            class="flex items-center px-3 py-2 rounded-sm hover:bg-gray-700 {{ request()->is('admin/orders*') ? 'bg-gray-700' : '' }}">
+                            <i class="fa-solid fa-file-invoice mr-2"></i>
                             <span class="ms-3">Orders</span>
                         </a>
                     </li>
@@ -71,7 +71,7 @@
                     class="sm:hidden">
                     <i class="fa-solid fa-bars text-xl hover:bg-light px-2 py-1 rounded-md transition-all"></i>
                 </button>
-                <a class="font-semibold text-3xl block sm:hidden" href="{{ route('admin') }}">Elvicto.</a>
+                <a class="font-semibold text-3xl block sm:hidden" href="{{ route('admin') }}">Leuwimalang.</a>
             </div>
 
             <button type="button" class="flex" id="user-menu-button" aria-expanded="false"

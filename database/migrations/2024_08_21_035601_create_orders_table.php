@@ -20,10 +20,8 @@ return new class extends Migration {
             $table->dateTime('shipped_at')->nullable();
             $table->dateTime('cancelled_at')->nullable();
             $table->dateTime('success_at')->nullable();
-            $table->dateTime('failed_at')->nullable();
             $table->text('note_cancelled')->nullable();
-            $table->text('note_failed')->nullable();
-            $table->enum('status', ['PENDING', 'PAID', 'SHIPPED', 'SUCCESS', 'CANCELLED', 'FAILED'])->default('PENDING');
+            $table->enum('status', ['PENDING', 'PAID', 'SHIPPED', 'SUCCESS', 'CANCELLED'])->default('PENDING');
             $table->timestamps();
         });
     }

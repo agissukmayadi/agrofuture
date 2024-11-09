@@ -11,15 +11,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes, HasUuids;
+    use HasFactory, SoftDeletes, HasUuids, Sluggable;
     protected $keyType = 'string';
     public $incrementing = false;
     protected $fillable = [
         'name',
+        'slug'
     ];
 
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+    /**
+     * Return the sluggable configuration array for this model.
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
     }
 }

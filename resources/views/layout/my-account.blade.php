@@ -1,10 +1,17 @@
 @extends('layout.index')
 @section('content')
-    <section class="w-full mt-14 bg-primary">
-        <div class="flex flex-col justify-center md:flex-row px-12 gap-6 mx-auto container py-20">
-            <h1 class="text-white text-center text-4xl font-bold md:text-5xl text-shadow-md ">
-                My Account
-            </h1>
+    <section class="relative bg-no-repeat bg-cover bg-center py-20 md:py-44"
+        style="background-image: url('{{ asset('/storage/img/page-title.jpg') }}')">
+        <div class="absolute top-0 w-full h-full bg-black bg-opacity-50 z-10"></div>
+        <div class="relative w-full h-full flex justify-center items-center  z-20">
+            <div class="container">
+                <h1 class="text-white text-center text-3xl font-thin md:text-left md:text-4xl text-shadow-md ">
+                    My Account
+                </h1>
+                <h1 class="text-white text-center text-3xl font-semibold md:text-left md:text-5xl text-shadow-md ">
+                    Luewimalang
+                </h1>
+            </div>
         </div>
     </section>
     <section class="w-full bg-gray-100">
@@ -12,20 +19,20 @@
             <div class="flex flex-col md:flex-row gap-5 text-sm  md:items-start">
                 <div class="w-full md:w-[30%] bg-white">
                     <a href="{{ route('my-account') }}"
-                        class="border border-gray-300 px-3 py-2 transition-all block hover:text-secondary cursor-pointer {{ Request::url() == route('my-account') ? 'text-secondary' : '' }}">Dashboard</a>
+                        class="border border-gray-300 px-3 py-2 transition-all block hover:text-green-600 cursor-pointer {{ Request::url() == route('my-account') ? 'text-green-600' : '' }}">Dashboard</a>
                     @if (Auth::user()->role == 'customer')
-                        <a href="{{ route('my-account.orders') }}"
-                            class="border border-gray-300 px-3 py-2 transition-all block hover:text-secondary cursor-pointer {{ Request::url() == route('my-account.orders') ? 'text-secondary' : '' }}">Orders</a>
+                        <a href="{{ route('orders') }}"
+                            class="border border-gray-300 px-3 py-2 transition-all block hover:text-green-600 cursor-pointer {{ Request::url() == route('orders') ? 'text-green-600' : '' }}">Orders</a>
                     @else
                         <a href="{{ route('admin') }}"
-                            class="border border-gray-300 px-3 py-2 transition-all block hover:text-secondary cursor-pointer {{ Request::url() == route('admin') ? 'text-secondary' : '' }}">Admin
+                            class="border border-gray-300 px-3 py-2 transition-all block hover:text-green-600 cursor-pointer {{ Request::url() == route('admin') ? 'text-green-600' : '' }}">Admin
                             Page</a>
                     @endif
                     <a href=" {{ route('my-account.edit-account') }}"
-                        class="border border-gray-300 px-3 py-2 transition-all block hover:text-secondary cursor-pointer {{ Request::url() == route('my-account.edit-account') ? 'text-secondary' : '' }}">Account
+                        class="border border-gray-300 px-3 py-2 transition-all block hover:text-green-600 cursor-pointer {{ Request::url() == route('my-account.edit-account') ? 'text-green-600' : '' }}">Account
                         Details</a>
                     <a href="{{ route('logout') }}"
-                        class="border border-gray-300 px-3 py-2 transition-all block hover:text-secondary cursor-pointer">Logout</a>
+                        class="border border-gray-300 px-3 py-2 transition-all block hover:text-green-600 cursor-pointer">Logout</a>
                 </div>
                 <div class="w-full md:w-[70%]">
                     <h4 class="text-lg font-bold">{{ $title }}</h4>
@@ -134,7 +141,6 @@
                     let url = '{{ route('redirect.pay', ':id') }}'
                     url = url.replace(':id', result.order_id)
                     window.location.href = url
-                    console.log(result);
                 },
                 onPending: function(result) {
                     /* You may add your own js here, this is just example */
@@ -159,7 +165,7 @@
             $('.cancel-order-button').on('click', function() {
                 const orderId = $(this).data('order-id')
                 const formCancelOrder = $('#form-cancel-order')
-                let url = '{{ route('my-account.order.cancel', ':id') }}'
+                let url = '{{ route('order.cancel', ':id') }}'
                 url = url.replace(':id', orderId)
                 formCancelOrder.attr('action', url)
             })
@@ -167,7 +173,7 @@
             $('.complete-order-button').on('click', function() {
                 const orderId = $(this).data('order-id')
                 const formConfirmOrder = $('#form-confirm-order')
-                let url = '{{ route('my-account.order.confirm', ':id') }}'
+                let url = '{{ route('order.confirm', ':id') }}'
                 url = url.replace(':id', orderId)
                 formConfirmOrder.attr('action', url)
             })

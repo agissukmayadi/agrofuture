@@ -74,7 +74,7 @@ class Order extends Model
 
     public function shipment()
     {
-        return $this->hasOne(Shipment::class);
+        return $this->hasOne(Shipment::class, 'order_id', 'id');
     }
 
     public function orderDetails()

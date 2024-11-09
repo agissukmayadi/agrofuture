@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold mb-5">Products</h1>
     <div class="w-full bg-white p-5 shadow-md">
         <h3 class="text-lg font-bold mb-2">Edit product</h3>
-        <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 col-span-1 lg:grid-cols-2 lg:gap-6">
                 <div class="lg:col-span-2">
@@ -103,7 +103,7 @@
                                     class="w-full h-auto rounded-lg shadow-md hover:scale-105 transition-all"
                                     alt="">
                                 <div class="flex justify-end mt-2 px-2">
-                                    <a href="{{ route('admin.products.images.delete', $image->id) }}"
+                                    <a href="{{ route('admin.product.images.delete', $image->id) }}"
                                         class="block text-xs lg:text-sm font-medium text-red-600 hover:underline img-delete-link">
                                         Delete
                                     </a>

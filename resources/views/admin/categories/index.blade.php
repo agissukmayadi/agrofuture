@@ -49,7 +49,7 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <form class="p-4 md:p-5" action="{{ route('admin.categories.store') }}" method="POST">
+                        <form class="p-4 md:p-5" action="{{ route('admin.category.store') }}" method="POST">
                             @csrf
                             <div class="grid gap-4 mb-4 grid-cols-2">
                                 <div class="col-span-2">
@@ -266,7 +266,7 @@
                 // // Set the name input value in the modal
                 $('#edit-category-name').val(category.name);
 
-                let updateUrl = "{{ route('admin.categories.update', ':id') }}";
+                let updateUrl = "{{ route('admin.category.update', ':id') }}";
                 updateUrl = updateUrl.replace(':id', category.id);
 
                 // Set action form di dalam modal
@@ -275,7 +275,7 @@
 
             $('[data-modal-target="delete-category-modal"]').on('click', function() {
                 const category = $(this).data('category');
-                let deleteUrl = "{{ route('admin.categories.destroy', ':id') }}";
+                let deleteUrl = "{{ route('admin.category.destroy', ':id') }}";
                 deleteUrl = deleteUrl.replace(':id', category.id);
                 $('#delete-category-link').attr('href', deleteUrl);
             })

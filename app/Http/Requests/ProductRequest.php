@@ -29,8 +29,8 @@ class ProductRequest extends FormRequest
             'price' => ['required', 'numeric', 'min:0'],
             'weight' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'numeric', 'min:0'],
-            'image_thumbnail' => ['image', 'mimes:png,jpg,jpeg', 'max:2048', 'dimensions:min_width=600,min_height=600,ratio=1/1'],
-            'images.*' => ['image', 'mimes:png,jpg,jpeg', 'max:2048', 'dimensions:min_width=600,min_height=600,ratio=1/1'],
+            'image_thumbnail' => ['image', 'mimes:png,jpg,jpeg', 'max:2048', 'dimensions:min_width=100,min_height=100,ratio=1/1'],
+            'images.*' => ['image', 'mimes:png,jpg,jpeg', 'max:2048', 'dimensions:min_width=100,min_height=100,ratio=1/1'],
         ];
     }
 

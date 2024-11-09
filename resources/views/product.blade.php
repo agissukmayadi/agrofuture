@@ -1,13 +1,18 @@
 @extends('layout.index')
 
 @section('content')
-    <section class="w-full bg-gray-300 mt-16">
-        <div class="container mx-auto flex flex-col items-center justify-center relative py-16 px-10 bg-no-repeat"
-            style="background-image: url('{{ asset('/storage/img/bg.png') }}')">
-            <img src="{{ asset('/storage/img/young-man-applying-his-anti-aging-treatment-removebg-preview-1.png') }}"
-                class=" absolute left-0 bottom-0 z-0 hidden md:block md:w-[12rem]">
-            <h1 class="text-left text-3xl font-bold text-primary relative z-10 text-shadow-sm">Skincare Terlengkap No 1. di
-                Indonesia</h1>
+    <section class="relative bg-no-repeat bg-cover bg-center py-20 md:py-44"
+        style="background-image: url('{{ asset('/storage/img/page-title.jpg') }}')">
+        <div class="absolute top-0 w-full h-full bg-black bg-opacity-50 z-10"></div>
+        <div class="relative w-full h-full flex justify-center items-center  z-20">
+            <div class="container">
+                <h1 class="text-white text-center text-3xl font-thin md:text-left md:text-4xl text-shadow-md ">
+                    Our Product
+                </h1>
+                <h1 class="text-white text-center text-3xl font-semibold md:text-left md:text-5xl text-shadow-md ">
+                    Luewimalang
+                </h1>
+            </div>
         </div>
     </section>
     <section class="w-full bg-gray-100 py-10">
@@ -48,7 +53,7 @@
                     @if ($products->count() > 0)
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
                             @foreach ($products as $product)
-                                <a href="{{ route('product.detail', $product->id) }}">
+                                <a href="{{ route('product.detail', $product->slug) }}">
                                     <div class=" max-w-full flex flex-col gap-2">
                                         <div class="relative overflow-hidden rounded-lg">
                                             <img src="{{ asset('/storage/img/products/' . $product->image_thumbnail->name) }}"
@@ -72,8 +77,8 @@
                             <p class=" text-left text-lg font-semibold text-primary">Sorry, we don't have any product
                             </p>
 
-                            @if (request()->has('product') || request()->has('category_id'))
-                                <a href="{{ route('product') }}"
+                            @if (request()->has('product') || request()->has('category'))
+                                <a href="{{ route('products') }}"
                                     class="rounded-full border border-primary px-6 py-2 flex items-center gap-2 w-fit">Clear
                                     <i class="fa-solid fa-xmark"></i></a>
                             @endif

@@ -29,6 +29,23 @@ class Shipment extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class, 'order_id', 'id', 'orders');
+    }
+
+    public function getLargestEstimateAttribute()
+    {
+        // Ambil nilai dari field estimasi
+        $estimate = $this->attributes['estimate'] ?? '';
+
+        // Jika estimasi kosong, kembalikan null
+        if (empty($estimate)) {
+            return null;
+        }
+
+        // Temukan semua angka dalam string estimasi
+        preg_match_all('/\d+/', $estimate, $matches);
+
+        // Ambil angka terbesar jika ada
+        return !empty($matches[0]) ? (int) max($matches[0]) : null;
     }
 }

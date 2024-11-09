@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Detail Pertanian - Kebun Stroberi</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100">
+        <!-- Navbar -->
+        <nav class="bg-green-600 p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-white text-2xl font-bold">
+                    Wisata & Pertanian
+                </h1>
+                <a href="index.html" class="text-white hover:underline"
+                    >Kembali ke Daftar Pertanian</a
+                >
+            </div>
+        </nav>
+
+        <!-- Detail Pertanian -->
+        <section class="container mx-auto mt-10 p-4">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-bold mb-4">Kebun Stroberi</h2>
+                <img
+                    src="https://via.placeholder.com/800x400"
+                    alt="Kebun Stroberi"
+                    class="w-full h-64 object-cover rounded-lg mb-4"
+                />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Informasi Utama -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Deskripsi</h3>
+                        <p class="text-gray-600">
+                            Kebun Stroberi terletak di daerah pegunungan yang
+                            sejuk. Di sini, pengunjung bisa menikmati pengalaman
+                            memetik stroberi langsung dari pohonnya, belajar
+                            tentang teknik bertani, dan merasakan produk-produk
+                            segar dari hasil panen.
+                        </p>
+
+                        <h3 class="text-xl font-semibold mt-6 mb-2">Produk</h3>
+                        <ul class="list-disc ml-5 text-gray-600">
+                            <li>Stroberi segar (Rp 50,000 / kg)</li>
+                            <li>Selai stroberi homemade (Rp 25,000 / botol)</li>
+                            <li>Jus stroberi segar (Rp 15,000 / gelas)</li>
+                        </ul>
+
+                        <h3 class="text-xl font-semibold mt-6 mb-2">
+                            Jam Operasional
+                        </h3>
+                        <p class="text-gray-600">Setiap hari, 08:00 - 17:00</p>
+                    </div>
+
+                    <!-- Lokasi -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Lokasi</h3>
+                        <div
+                            class="bg-gray-200 h-64 w-full rounded-lg shadow-lg"
+                        >
+                            <!-- Embed Google Maps iframe (ganti src dengan lokasi yang sesuai) -->
+                            <iframe
+                                class="w-full h-full rounded-lg"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434508616!2d144.95373631568066!3d-37.81720974257139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf0727a63cd35a48b!2sFederation+Square!5e0!3m2!1sen!2sus!4v1549547387486"
+                                frameborder="0"
+                                style="border: 0"
+                                allowfullscreen=""
+                            ></iframe>
+                        </div>
+
+                        <p class="mt-2 text-green-600 font-bold">
+                            Lokasi: Pegunungan XYZ
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Galeri Produk -->
+                <div class="mt-10">
+                    <h3 class="text-xl font-semibold mb-4">Galeri Produk</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <img
+                            src="https://via.placeholder.com/400x300"
+                            alt="Stroberi segar"
+                            class="rounded-lg shadow-md"
+                        />
+                        <img
+                            src="https://via.placeholder.com/400x300"
+                            alt="Selai Stroberi"
+                            class="rounded-lg shadow-md"
+                        />
+                        <img
+                            src="https://via.placeholder.com/400x300"
+                            alt="Jus Stroberi"
+                            class="rounded-lg shadow-md"
+                        />
+                    </div>
+                </div>
+
+                <!-- Review Section -->
+                <div class="mt-10">
+                    <h3 class="text-xl font-semibold mb-4">
+                        Ulasan Pengunjung
+                    </h3>
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <p class="text-gray-800 font-bold">Andi</p>
+                        <p class="text-gray-600">
+                            Pengalaman yang sangat menyenangkan! Stroberinya
+                            segar, dan anak-anak sangat menikmati memetik
+                            langsung dari kebun.
+                        </p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <p class="text-gray-800 font-bold">Siti</p>
+                        <p class="text-gray-600">
+                            Produk-produk olahan stroberinya sangat enak. Selai
+                            dan jus stroberinya wajib dicoba!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-green-600 text-white text-center p-6 mt-10">
+            <p>&copy; 2024 Wisata & Pertanian. All Rights Reserved.</p>
+        </footer>
+    </body>
+</html>

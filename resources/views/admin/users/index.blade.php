@@ -41,7 +41,7 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <form class="p-4 md:p-5" action="{{ route('admin.users.store') }}" method="POST">
+                        <form class="p-4 md:p-5" action="{{ route('admin.user.store') }}" method="POST">
                             @csrf
                             <div class="grid gap-4 mb-4 grid-cols-2">
                                 <div class="col-span-2">
@@ -368,7 +368,7 @@
     <script>
         $('[data-modal-target="delete-user-modal"]').on('click', function() {
             const user = $(this).data('user');
-            let deleteUrl = "{{ route('admin.users.destroy', ':id') }}";
+            let deleteUrl = "{{ route('admin.user.destroy', ':id') }}";
             deleteUrl = deleteUrl.replace(':id', user.id);
             $('#delete-user-link').attr('href', deleteUrl);
         })
@@ -381,7 +381,7 @@
             $('#edit-user-email').val(user.email);
             $('#edit-user-role').val(user.role);
 
-            let updateUrl = "{{ route('admin.users.update', ':id') }}";
+            let updateUrl = "{{ route('admin.user.update', ':id') }}";
             updateUrl = updateUrl.replace(':id', user.id);
 
             // Set action form di dalam modal
